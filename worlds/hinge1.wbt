@@ -2,8 +2,8 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.5017278143163673 0.8529397180029383 0.144093850647379 0.6042463268785578
-  position 1.140800801550548 0.6239898003378433 1.5690357995324158
+  orientation -0.6719957450237295 0.7226947127501258 0.16166035640507567 0.6025801702911567
+  position 1.1401366219518965 1.0279155799502218 1.5700619973269643
 }
 TexturedBackground {
 }
@@ -11,8 +11,8 @@ TexturedBackgroundLight {
 }
 Floor {
 }
-Solid {
-  translation 0 0.12999999999999998 0
+DEF G_BLUE_TABLE Solid {
+  translation 0 0.5200000000000002 0
   children [
     Shape {
       appearance PBRAppearance {
@@ -24,20 +24,53 @@ Solid {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        axis 0 0 1
         anchor 0.5 0 0
+        minStop -1
+        maxStop 1
+        springConstant 0.5
+        dampingConstant 0.5
+        staticFriction 0.01
       }
       endPoint Solid {
         translation 0.6 0 0
+        rotation 0 0 1 0
         children [
           Shape {
             appearance PBRAppearance {
               baseColor 0.8 0 0
             }
-            geometry Box {
+            geometry DEF G_RED_TABLE Box {
               size 0.2 0.01 0.1
             }
           }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 0 1
+              anchor 0.1 0 0
+            }
+            endPoint Solid {
+              translation 0.2 0 0
+              rotation 0 0 1 0
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.3058823529411765 0.6039215686274509 0.023529411764705882
+                  }
+                  geometry DEF G_GREEN_TABLE Box {
+                    size 0.2 0.01 0.1
+                  }
+                }
+              ]
+              boundingObject USE G_GREEN_TABLE
+              physics Physics {
+              }
+            }
+          }
         ]
+        boundingObject USE G_RED_TABLE
+        physics Physics {
+        }
       }
     }
   ]
